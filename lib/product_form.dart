@@ -14,14 +14,18 @@ class _ProductFormPageState extends State<ProductFormPage> {
   double _price = 0.0;
   String _description = "";
   String _thumbnail = "";
-  String _category = "shoes"; // default
+  String _category = "Footwear"; // default
   bool _isFeatured = false;
 
   final List<String> _categories = [
-    'shoes',
-    'jersey',
-    'accessories',
-    'equipment',
+    'Kits & Jerseys',
+    'Footwear',
+    'Equipment',
+    'Goalkeeper',
+    'Clothing & Apparel',
+    'Fan Shop',
+    'Kids & Youth',
+    'Accessories',
   ];
 
   @override
@@ -128,7 +132,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Thumbnail URL (optional)',
+                    labelText: 'Thumbnail URL',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) {
@@ -137,11 +141,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     });
                   },
                   validator: (value) {
-                    if (value != null && value.isNotEmpty) {
-                      final uri = Uri.tryParse(value);
-                      if (uri == null || !uri.hasScheme || !uri.hasAuthority) {
-                        return 'Please enter a valid URL';
-                      }
+                    if (value == null || value.isEmpty) {
+                      return 'Thumbnail URL cannot be empty';
+                    }
+                    final uri = Uri.tryParse(value);
+                    if (uri == null || !uri.hasScheme || !uri.hasAuthority) {
+                      return 'Please enter a valid URL';
                     }
                     return null;
                   },
@@ -219,7 +224,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                     _price = 0.0;
                                     _description = "";
                                     _thumbnail = "";
-                                    _category = "shoes";
+                                    _category = "Footwear";
                                     _isFeatured = false;
                                   });
                                 },
