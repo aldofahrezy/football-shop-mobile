@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'product_form.dart';
+import 'widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
@@ -10,7 +12,7 @@ class MyHomePage extends StatelessWidget {
   final List<ItemHomepage> items = [
     ItemHomepage("All Products", Icons.list, Colors.blue),
     ItemHomepage("My Products", Icons.person, Colors.green),
-    ItemHomepage("Create Product", Icons.add, Colors.red),
+    ItemHomepage("Tambah Produk", Icons.add, Colors.red),
   ];
 
   @override
@@ -27,6 +29,7 @@ class MyHomePage extends StatelessWidget {
         // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
+      drawer: const LeftDrawer(),
       // Body halaman dengan padding di sekelilingnya.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -153,6 +156,14 @@ class ItemCard extends StatelessWidget {
             ..showSnackBar(
               SnackBar(content: Text("Kamu telah menekan tombol ${item.name}")),
             );
+
+          // Navigate to form if "Tambah Produk"
+          if (item.name == "Tambah Produk") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProductFormPage()),
+            );
+          }
         },
         // Container untuk menyimpan Icon dan Text
         child: Container(
