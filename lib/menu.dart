@@ -10,34 +10,21 @@ class MyHomePage extends StatelessWidget {
   final String kelas = "C"; //kelas
 
   final List<ItemHomepage> items = [
-    ItemHomepage("All Products", Icons.list, Colors.blue),
-    ItemHomepage("My Products", Icons.person, Colors.green),
-    ItemHomepage("Tambah Produk", Icons.add, Colors.red),
+    ItemHomepage("All Products", Icons.list, Colors.blueGrey.shade700),
+    ItemHomepage("My Products", Icons.person, Colors.blueGrey.shade700),
+    ItemHomepage("Tambah Produk", Icons.add, Colors.black),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold menyediakan struktur dasar halaman dengan AppBar dan body.
     return Scaffold(
-      // AppBar adalah bagian atas halaman yang menampilkan judul.
-      appBar: AppBar(
-        // Judul aplikasi "Football Shop" dengan teks putih dan tebal.
-        title: const Text(
-          'The Kickoff Zone',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
+      appBar: AppBar(title: const Text('The Kickoff Zone')),
       drawer: const LeftDrawer(),
-      // Body halaman dengan padding di sekelilingnya.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        // Menyusun widget secara vertikal dalam sebuah kolom.
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Row untuk menampilkan 3 InfoCard secara horizontal.
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

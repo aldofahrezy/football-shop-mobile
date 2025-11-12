@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:football_shop/themes/app_theme.dart';
 import 'menu.dart';
 
 void main() {
@@ -11,10 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Football Shop',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      title: 'The Kickoff Zone',
+      theme: appTheme,
       home: MyHomePage(),
     );
   }

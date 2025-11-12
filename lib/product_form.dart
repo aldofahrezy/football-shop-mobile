@@ -32,10 +32,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add New Product',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text('Add New Product'),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       drawer: const LeftDrawer(),
@@ -161,7 +158,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     labelText: 'Category',
                     border: OutlineInputBorder(),
                   ),
-                  value: _category,
+                  initialValue: _category,
                   items: _categories.map((cat) {
                     return DropdownMenuItem(
                       value: cat,
