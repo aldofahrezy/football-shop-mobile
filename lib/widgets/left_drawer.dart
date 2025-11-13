@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 import '../menu.dart';
 import '../product_form.dart';
+import '../screens/login.dart';
+import '../screens/product_list.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -45,6 +49,18 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.list),
+            title: const Text('Lihat Produk'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductListPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.add),
             title: const Text('Tambah Produk'),
             onTap: () {
@@ -54,6 +70,28 @@ class LeftDrawer extends StatelessWidget {
                   builder: (context) => const ProductFormPage(),
                 ),
               );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            onTap: () async {
+              final request = context.read<CookieRequest>();
+              final response = await request.logout(
+                "http://10.0.2.2:8000/auth/logout/",
+              );
+              String message = response["message"];
+              if (context.mounted) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(content: Text("$message Sampai jumpa.")),
+                  );
+              }
             },
           ),
         ],

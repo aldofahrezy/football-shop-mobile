@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'product_form.dart';
 import 'widgets/left_drawer.dart';
+import 'screens/product_list.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
@@ -10,8 +11,7 @@ class MyHomePage extends StatelessWidget {
   final String kelas = "C"; //kelas
 
   final List<ItemHomepage> items = [
-    ItemHomepage("All Products", Icons.list, Colors.blueGrey.shade700),
-    ItemHomepage("My Products", Icons.person, Colors.blueGrey.shade700),
+    ItemHomepage("Lihat Produk", Icons.list, Colors.blueGrey.shade700),
     ItemHomepage("Tambah Produk", Icons.add, Colors.black),
   ];
 
@@ -54,13 +54,13 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
 
-                  // Grid untuk menampilkan ItemCard dalam bentuk grid 3 kolom.
+                  // Grid untuk menampilkan ItemCard dalam bentuk grid 2 kolom.
                   GridView.count(
                     primary: true,
                     padding: const EdgeInsets.all(20),
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    crossAxisCount: 3,
+                    crossAxisCount: 2,
                     // Agar grid menyesuaikan tinggi kontennya.
                     shrinkWrap: true,
 
@@ -137,15 +137,15 @@ class ItemCard extends StatelessWidget {
       child: InkWell(
         // Aksi ketika kartu ditekan.
         onTap: () {
-          // Menampilkan pesan SnackBar saat kartu ditekan.
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}")),
+          // Navigate to product list if "Lihat Produk"
+          if (item.name == "Lihat Produk") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProductListPage()),
             );
-
+          }
           // Navigate to form if "Tambah Produk"
-          if (item.name == "Tambah Produk") {
+          else if (item.name == "Tambah Produk") {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ProductFormPage()),

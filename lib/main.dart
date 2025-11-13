@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:football_shop/themes/app_theme.dart';
-import 'menu.dart';
+import 'screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'The Kickoff Zone',
-      theme: appTheme,
-      home: MyHomePage(),
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+      child: MaterialApp(
+        title: 'Football Shop',
+        theme: appTheme,
+        home: const LoginPage(),
+      ),
     );
   }
 }

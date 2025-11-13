@@ -59,3 +59,31 @@ Padding menambahkan ruang di sekitar elemen untuk menghindari crowding (membuatn
 ## Bagaimana kamu menyesuaikan warna tema agar aplikasi Football Shop memiliki identitas visual yang konsisten dengan brand toko?
 
 Saya menggunakan ThemeData dengan ColorScheme.fromSeed(seedColor: Colors.deepPurple) di MaterialApp. AppBar menggunakan Theme.of(context).colorScheme.primary untuk konsistensi. Drawer header menggunakan warna deepPurple untuk brand football shop. Ini mungkin masih bisa berubah mengingat saya ingin menyelaraskannya dengan aplikasi web pra uts.
+
+<br>
+
+# Tugas Individu 9: Integrasi Layanan Web Django dengan Aplikasi Flutter
+
+## Jelaskan mengapa kita perlu membuat model untuk data JSON yang akan digunakan pada Flutter. Bagaimana bedanya dengan penggunaan Map atau objek lain?
+
+Model diperlukan untuk type safety, null-safety, dan maintainability. Dengan model, kita dapat mendefinisikan struktur data yang jelas, memudahkan debugging, dan mencegah error runtime. Berbeda dengan Map yang tidak terstruktur dan rentan terhadap typo, model memungkinkan autocomplete dan validasi compile-time. Objek lain seperti dynamic juga kurang aman karena tidak ada jaminan tipe data.
+
+## Jelaskan fungsi dari library http dan pbp_django_auth. Bagaimana keduanya berbeda?
+
+Library http digunakan untuk melakukan HTTP requests seperti GET, POST, dll. pbp_django_auth adalah wrapper khusus untuk autentikasi Django, menyediakan CookieRequest yang mengelola session dan cookies secara otomatis. Perbedaannya adalah http lebih general purpose untuk semua request, sedangkan pbp_django_auth khusus untuk autentikasi dan session management dengan Django backend.
+
+## Jelaskan fungsi dari CookieRequest dan bagaimana penggunaannya dalam sharing instance pada aplikasi Flutter.
+
+CookieRequest mengelola cookies dan session untuk autentikasi. Instance-nya disharing menggunakan Provider agar semua widget dapat mengakses request yang sama dengan session yang konsisten. Ini memungkinkan state login dipertahankan di seluruh aplikasi tanpa perlu pass instance secara manual.
+
+## Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+
+Data dimulai dari input user di Flutter form, di-encode menjadi JSON, dikirim via POST ke Django endpoint. Django memproses, menyimpan ke database, dan mengembalikan response. Flutter menerima response, decode JSON, dan update UI. Untuk autentikasi, credentials dikirim ke Django, divalidasi, dan session cookies dikembalikan untuk akses selanjutnya.
+
+## Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input credentials pada Flutter hingga berhasil logout pada Django.
+
+Login: Input credentials di Flutter → POST ke Django auth/login → Django validasi → return session cookies → Flutter simpan cookies via CookieRequest → redirect ke menu. Register mirip tapi ke auth/register. Logout: Flutter panggil request.logout() → POST ke Django auth/logout → Django clear session → return response → Flutter clear cookies → redirect ke login.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (Tidak perlu jawab satu-satu, tapi secara keseluruhan)
+
+Implementasi dimulai dengan setup dependencies (provider, pbp_django_auth, http) dan permissions. Update main.dart dengan Provider untuk CookieRequest dan tema Football Shop. Buat screens login/register dengan form dan navigasi. Buat model Product dengan fromJson/toJson. Implementasi product_list dengan FutureBuilder dan ProductCard, product_detail untuk tampilan detail. Update product_form untuk POST ke Django create endpoint. Tambah logout di drawer. Update navigasi dan UI. Update README dengan penjelasan. Test dan commit.

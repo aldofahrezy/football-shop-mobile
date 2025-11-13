@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 import 'widgets/left_drawer.dart';
+import 'screens/product_list.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -188,48 +191,45 @@ class _ProductFormPageState extends State<ProductFormPage> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Product Added Successfully'),
-                            content: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Name: $_name'),
-                                  Text('Price: \$$_price'),
-                                  Text('Description: $_description'),
-                                  Text('Thumbnail: $_thumbnail'),
-                                  Text('Category: $_category'),
-                                  Text(
-                                    'Featured: ${_isFeatured ? "Yes" : "No"}',
-                                  ),
-                                ],
+                      final request = context.read<CookieRequest>();
+                      final response = await request
+                          .postJson("http://10.0.2.2:8000/create-flutter/", {
+                            "name": _name,
+                            "price": _price.toString(),
+                            "description": _description,
+                            "thumbnail": _thumbnail,
+                            "category": _category,
+                            "is_featured": _isFeatured.toString(),
+                          });
+                      if (context.mounted) {
+                        if (response['status'] == 'success') {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              const SnackBar(
+                                content: Text("Product berhasil disimpan!"),
                               ),
+                            );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ProductListPage(),
                             ),
-                            actions: [
-                              TextButton(
-                                child: const Text('OK'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  _formKey.currentState!.reset();
-                                  setState(() {
-                                    _name = "";
-                                    _price = 0.0;
-                                    _description = "";
-                                    _thumbnail = "";
-                                    _category = "Footwear";
-                                    _isFeatured = false;
-                                  });
-                                },
-                              ),
-                            ],
                           );
-                        },
-                      );
+                        } else {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Terdapat kesalahan, silakan coba lagi.",
+                                ),
+                              ),
+                            );
+                        }
+                      }
                     }
                   },
                   child: const Text('Save'),
