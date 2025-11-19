@@ -99,3 +99,9 @@ Untuk login: input username/password di Flutter, kirim POST ke Django login endp
 7. Untuk autentikasi: buat screen login/register dengan form, kirim credentials ke Django, handle response untuk navigasi.
 8. Untuk logout: buat fungsi yang panggil logout endpoint dan clear navigation stack.
 9. Test integrasi dengan emulator, pastikan data flow dari input ke display bekerja.
+
+# The Kickoff Zone
+[![Build Status](https://app.bitrise.io/app/49583e37-8dfb-4fc4-91fb-a1afba461daf/status.svg?token=rEjfK-UIqgPiuJsd7EmOGg&branch=main)](https://app.bitrise.io/app/49583e37-8dfb-4fc4-91fb-a1afba461daf)
+
+## Download
+https://app.bitrise.io/app/49583e37-8dfb-4fc4-91fb-a1afba461daf/installable-artifacts/506473a931cda6d6/public-install-page/c257232ad87699d7cf1e3dace578b25f
